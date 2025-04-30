@@ -65,14 +65,8 @@ Follow these steps to set up and run the project locally:
   ```
 
 
-## ✨ Key Features
- ### Customer Management
+## ✨Endpoints:
 
- Create, read, update, and delete customer records.
-
- ### Endpoints:
-
-### ============================================
 ## ✅ USER ROUTES - /api/user
 ### ============================================
 
@@ -105,7 +99,7 @@ Follow these steps to set up and run the project locally:
 
 ### ============================================
 
-### ============================================
+
 ## ✅ AUTH ROUTES - /api/auth
 ### ============================================
 
@@ -132,7 +126,7 @@ Follow these steps to set up and run the project locally:
 ### ============================================
 
 
-### ============================================
+
 ## ✅ CATEGORY ROUTES - /api/category
 ### ============================================
 
@@ -155,7 +149,7 @@ Follow these steps to set up and run the project locally:
 ### ============================================
 
 
-### ============================================
+
 ## ✅ POSTS ROUTES - /api/post
 ### ============================================
 
@@ -202,7 +196,7 @@ Follow these steps to set up and run the project locally:
 # ============================================
 
 
-### ============================================
+
 ## ✅ COMMENT ROUTES - /api/comment
 ### ============================================
 
@@ -225,7 +219,7 @@ Follow these steps to set up and run the project locally:
 ### ============================================
 
 
-### ============================================
+
 ## ✅ VOTE ROUTES - /api/vote
 ### ============================================
 
@@ -248,7 +242,7 @@ Follow these steps to set up and run the project locally:
 ### ============================================
 
 
-### ============================================
+
 ## ✅ REVIEW ROUTES - /api/review
 ### ============================================
 
@@ -268,7 +262,6 @@ Follow these steps to set up and run the project locally:
 ### Access: USER
 ### Description: Delete your review from a post. Requires authentication.
 
-# ============================================
 
 
 
