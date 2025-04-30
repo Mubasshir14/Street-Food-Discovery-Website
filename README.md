@@ -268,7 +268,7 @@ Follow these steps to set up and run the project locally:
 
 ## Folder Structure
 ```bash
-Bike-Service/
+Street_Food_Discovery_Website/
 │── .vercel/
 │── node_modules/
 │── dist/

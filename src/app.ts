@@ -13,7 +13,7 @@ app.use(cookieParser());
 
 app.get("/", (req: Request, res: Response) => {
   res.send({
-    Message: "Street Food Discovery WebsiteSERVER IS RUNNING",
+    Message: "Street Food Discovery Website SERVER IS RUNNING",
   });
 });
 
