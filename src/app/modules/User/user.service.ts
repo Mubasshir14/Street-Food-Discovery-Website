@@ -22,6 +22,7 @@ const createAdmin = async (req: Request) => {
 
   const userData = {
     email: req.body.email,
+    name: req.body.name
     password: hashedPassword,
     role: UserRole.ADMIN,
     profilePhoto: req.body.profilePhoto,
@@ -46,6 +47,7 @@ const createUser = async (req: Request) => {
 
   const userData = {
     email: req.body.email,
+    name: req.body.name,
     password: hashedPassword,
     role: UserRole.USER,
     profilePhoto: req.body.profilePhoto,
