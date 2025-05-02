@@ -21,6 +21,11 @@ router.get(
   auth(UserRole.ADMIN),
   PostController.getRejectedPostFromDB
 );
+router.get(
+  "/get-premium-post",
+  auth(UserRole.ADMIN),
+  PostController.getPremiumPostFromDB
+);
 router.get("/", auth(UserRole.ADMIN), PostController.getAllFromDB);
 router.get("/:id", auth(UserRole.ADMIN), PostController.getAllFromDB);
 

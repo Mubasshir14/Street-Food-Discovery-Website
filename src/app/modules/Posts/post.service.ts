@@ -299,6 +299,7 @@ const getApprovedPostFromDB = async (
     data,
   };
 };
+
 const getRejectedPostFromDB = async (
   params: any,
   options: IPaginationOptions,
@@ -377,6 +378,102 @@ const getRejectedPostFromDB = async (
         priceRange: true,
         userId: true,
         status: true,
+      },
+    }),
+    prisma.post.count({
+      where: whereConditions,
+    }),
+  ]);
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data,
+  };
+};
+
+const getPremiumPostFromDB = async (
+  params: any,
+  options: IPaginationOptions,
+  user?: IAuthUser
+) => {
+  const { page, limit, skip } = PaginationHelper.calculatePagination(options);
+  const { searchTerm, ...filterData } = params;
+
+  const andCondions: Prisma.PostWhereInput[] = [];
+
+  andCondions.push({
+    status: PostStatus.APPROVED,
+  });
+
+  const userData = await prisma.user.findUnique({
+    where: {
+      email: user?.email,
+    },
+  });
+
+  if (userData && userData.isPremium) {
+  } else if (userData && userData.isPremium) {
+    andCondions.push({
+      isPremium: true,
+    });
+  } else {
+    andCondions.push({
+      isPremium: true,
+    });
+  }
+
+  if (searchTerm) {
+    andCondions.push({
+      OR: postSearchAbleFields.map((field) => ({
+        [field]: {
+          contains: searchTerm,
+          mode: "insensitive",
+        },
+      })),
+    });
+  }
+
+  if (Object.keys(filterData).length > 0) {
+    andCondions.push({
+      AND: Object.keys(filterData).map((key) => ({
+        [key]: {
+          equals: (filterData as any)[key],
+        },
+      })),
+    });
+  }
+
+  const whereConditions: Prisma.PostWhereInput =
+    andCondions.length > 0 ? { AND: andCondions } : {};
+
+  const [data, total] = await Promise.all([
+    prisma.post.findMany({
+      where: whereConditions,
+      skip,
+      take: limit,
+      orderBy:
+        options.sortBy && options.sortOrder
+          ? {
+              [options.sortBy]: options.sortOrder,
+            }
+          : {
+              createdAt: "desc",
+            },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        location: true,
+        image: true,
+        categoryId: true,
+        priceRange: true,
+        userId: true,
+        status: true,
+        isPremium: true
       },
     }),
     prisma.post.count({
@@ -530,4 +627,5 @@ export const PostService = {
   updatePost,
   deletePost,
   makePostPremium,
+  getPremiumPostFromDB
 };

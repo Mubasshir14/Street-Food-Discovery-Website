@@ -12,7 +12,6 @@ const createPost: RequestHandler = catchAsync(
   async (req: Request & { user?: IAuthUser }, res: Response) => {
     const user = req.user;
     const result = await PostService.createPost(user as IAuthUser, req);
-    console.log(result);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
@@ -52,16 +51,6 @@ const getPendingPostFromDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-// const getPendingPostFromDB = catchAsync(async (req: Request, res: Response) => {
-//   const result = await PostService.getPendingPostFromDB();
-
-//   sendResponse(res, {
-//     statusCode: httpStatus.OK,
-//     success: true,
-//     message: "Post fetched successfully!",
-//     data: result,
-//   });
-// });
 
 const getApprovedPostFromDB = catchAsync(
   async (req: Request & { user?: IAuthUser }, res: Response) => {
@@ -90,6 +79,26 @@ const getRejectedPostFromDB = catchAsync(
     const options = pick(req.query, ["limit", "page", "sortBy", "sortOrder"]);
     const user = req.user;
     const result = await PostService.getRejectedPostFromDB(
+      filters,
+      options,
+      user as IAuthUser
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Post fetched successfully!",
+      meta: result.meta,
+      data: result.data,
+    });
+  }
+);
+const getPremiumPostFromDB = catchAsync(
+  async (req: Request & { user?: IAuthUser }, res: Response) => {
+    const filters = pick(req.query, postFilterableFields);
+    const options = pick(req.query, ["limit", "page", "sortBy", "sortOrder"]);
+    const user = req.user;
+    const result = await PostService.getPremiumPostFromDB(
       filters,
       options,
       user as IAuthUser
@@ -194,6 +203,7 @@ export const PostController = {
   getApprovedPostFromDB,
   getApprovedPostById,
   getRejectedPostFromDB,
+  getPremiumPostFromDB,
   getPostById,
   updatePostStatus,
   updatePost,
