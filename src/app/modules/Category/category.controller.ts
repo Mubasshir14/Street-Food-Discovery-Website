@@ -8,6 +8,7 @@ import { categoryFilterableFields } from "./category.constant";
 
 const createCategory: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
+    console.log("HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
     const result = await CategoryService.createCategory(req);
     sendResponse(res, {
       statusCode: httpStatus.OK,

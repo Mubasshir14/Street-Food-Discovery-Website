@@ -4,25 +4,55 @@ import { AuthServices } from "./auth.service";
 import sendResponse from "../../../shared/sendResponse";
 import httpStatus from "http-status";
 
+// const loginUser: RequestHandler = catchAsync(
+//   async (req: Request, res: Response) => {
+//     const result = await AuthServices.loginUser(req.body);
+//     const { refresshToken } = result;
+
+//     res.cookie("refreshToken", refresshToken, {
+//       secure: false,
+//       httpOnly: true,
+//     });
+//     sendResponse(res, {
+//       statusCode: httpStatus.OK,
+//       success: true,
+//       message: "Logged in Successfully!",
+//       data: {
+//         accessToken: result.accessToken,
+//       },
+//     });
+//   }
+// );
+
 const loginUser: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const result = await AuthServices.loginUser(req.body);
-    const { refresshToken } = result;
+    const { accessToken, refresshToken } = result;
+
 
     res.cookie("refreshToken", refresshToken, {
-      secure: false,
+      secure: false, 
       httpOnly: true,
     });
+
+    
+    res.cookie("accessToken", accessToken, {
+      secure: false, 
+      httpOnly: true,
+      expires: new Date(Date.now() + 3600000), 
+    });
+
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
       message: "Logged in Successfully!",
       data: {
-        accessToken: result.accessToken,
+        accessToken: result.accessToken, 
       },
     });
   }
 );
+
 
 const refreshToken: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {

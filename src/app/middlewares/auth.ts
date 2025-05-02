@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { jwtwtHelpers } from "../../helpers/jwtHelpers";
 import config from "../../config";
 import { Secret } from "jsonwebtoken";
 
 import httpStatus from "http-status";
 import AppError from "../error/AppError";
+import { jwtHelpers } from "../../helpers/jwtHelpers";
 
 const auth = (...roles: string[]) => {
   return async (
@@ -17,7 +17,7 @@ const auth = (...roles: string[]) => {
       if (!token) {
         throw new AppError(httpStatus.UNAUTHORIZED, "You Are Not Authprized");
       }
-      const verifieduser = jwtwtHelpers.verifyToken(
+      const verifieduser = jwtHelpers.verifyToken(
         token,
         config.jwt.jwt_secret as Secret
       );

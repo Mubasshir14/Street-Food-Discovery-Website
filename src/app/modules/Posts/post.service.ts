@@ -54,6 +54,7 @@ const createPost = async (user: IAuthUser, req: Request) => {
       isPremium: false,
     },
   });
+  console.log('service', result);
   return result;
 };
 

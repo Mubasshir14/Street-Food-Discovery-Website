@@ -12,6 +12,7 @@ const createPost: RequestHandler = catchAsync(
   async (req: Request & { user?: IAuthUser }, res: Response) => {
     const user = req.user;
     const result = await PostService.createPost(user as IAuthUser, req);
+    console.log(result);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
