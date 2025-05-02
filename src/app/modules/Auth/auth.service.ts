@@ -1,12 +1,12 @@
 import prisma from "../../../shared/prisma";
 import * as bcrypt from "bcrypt";
 import jwt, { JwtPayload, Secret } from "jsonwebtoken";
-import { jwtwtHelpers } from "../../../helpers/jwtHelpers";
 import { UserStatus } from "@prisma/client";
 import config from "../../../config";
 import httpStatus from "http-status";
 import emailSender from "../../middlewares/emailSender";
 import AppError from "../../error/AppError";
+import { jwtHelpers } from "../../../helpers/jwtHelpers";
 
 const loginUser = async (payload: { email: string; password: string }) => {
   const userData = await prisma.user.findUniqueOrThrow({
@@ -25,7 +25,7 @@ const loginUser = async (payload: { email: string; password: string }) => {
     throw new Error("Password Incorrect");
   }
 
-  const accessToken = jwtwtHelpers.generateToken(
+  const accessToken = jwtHelpers.generateToken(
     {
       email: userData.email,
       role: userData.role,
@@ -34,7 +34,7 @@ const loginUser = async (payload: { email: string; password: string }) => {
     config.jwt.expires_in as string
   );
 
-  const refresshToken = jwtwtHelpers.generateToken(
+  const refresshToken = jwtHelpers.generateToken(
     {
       email: userData.email,
       role: userData.role,
@@ -52,7 +52,7 @@ const loginUser = async (payload: { email: string; password: string }) => {
 const refreshToken = async (token: string) => {
   let decodedData;
   try {
-    decodedData = jwtwtHelpers.verifyToken(
+    decodedData = jwtHelpers.verifyToken(
       token,
       config.jwt.refresh_token_secret as Secret
     );
@@ -67,7 +67,7 @@ const refreshToken = async (token: string) => {
     },
   });
 
-  const accessToken = jwtwtHelpers.generateToken(
+  const accessToken = jwtHelpers.generateToken(
     {
       email: userData.email,
       role: userData.role,
@@ -122,7 +122,7 @@ const forgotPassword = async (payload: { email: string }) => {
     },
   });
 
-  const resetPasswordTOken = jwtwtHelpers.generateToken(
+  const resetPasswordTOken = jwtHelpers.generateToken(
     {
       email: payload.email,
       role: userData.role,
@@ -176,7 +176,7 @@ const resetPassword = async (
     },
   });
 
-  const isValidToken = jwtwtHelpers.verifyToken(
+  const isValidToken = jwtHelpers.verifyToken(
     token,
     config.jwt.reset_password_token as Secret
   );
