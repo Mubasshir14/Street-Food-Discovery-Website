@@ -52,12 +52,44 @@ const getPendingPostFromDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// const getPendingPostFromDB = catchAsync(async (req: Request, res: Response) => {
+//   const result = await PostService.getPendingPostFromDB();
+
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: "Post fetched successfully!",
+//     data: result,
+//   });
+// });
+
 const getApprovedPostFromDB = catchAsync(
   async (req: Request & { user?: IAuthUser }, res: Response) => {
     const filters = pick(req.query, postFilterableFields);
     const options = pick(req.query, ["limit", "page", "sortBy", "sortOrder"]);
     const user = req.user;
     const result = await PostService.getApprovedPostFromDB(
+      filters,
+      options,
+      user as IAuthUser
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Post fetched successfully!",
+      meta: result.meta,
+      data: result.data,
+    });
+  }
+);
+
+const getRejectedPostFromDB = catchAsync(
+  async (req: Request & { user?: IAuthUser }, res: Response) => {
+    const filters = pick(req.query, postFilterableFields);
+    const options = pick(req.query, ["limit", "page", "sortBy", "sortOrder"]);
+    const user = req.user;
+    const result = await PostService.getRejectedPostFromDB(
       filters,
       options,
       user as IAuthUser
@@ -161,6 +193,7 @@ export const PostController = {
   getPendingPostFromDB,
   getApprovedPostFromDB,
   getApprovedPostById,
+  getRejectedPostFromDB,
   getPostById,
   updatePostStatus,
   updatePost,

@@ -54,7 +54,7 @@ const createPost = async (user: IAuthUser, req: Request) => {
       isPremium: false,
     },
   });
-  console.log('service', result);
+  console.log("service", result);
   return result;
 };
 
@@ -133,12 +133,12 @@ const getPendingPostFromDB = async (
   options: IPaginationOptions
 ) => {
   const { page, limit, skip } = PaginationHelper.calculatePagination(options);
-  const { searchTerm, ...filterData } = params;
+  const { searchTerm, status, ...filterData } = params;
 
   const andCondions: Prisma.PostWhereInput[] = [];
 
   andCondions.push({
-    status: "PENDING",
+    status: PostStatus.PENDING,
   });
 
   if (searchTerm) {
@@ -299,6 +299,100 @@ const getApprovedPostFromDB = async (
     data,
   };
 };
+const getRejectedPostFromDB = async (
+  params: any,
+  options: IPaginationOptions,
+  user?: IAuthUser
+) => {
+  const { page, limit, skip } = PaginationHelper.calculatePagination(options);
+  const { searchTerm, ...filterData } = params;
+
+  const andCondions: Prisma.PostWhereInput[] = [];
+
+  andCondions.push({
+    status: PostStatus.REJECTED,
+  });
+
+  const userData = await prisma.user.findUnique({
+    where: {
+      email: user?.email,
+    },
+  });
+
+  if (userData && userData.isPremium) {
+  } else if (userData && userData.isPremium) {
+    andCondions.push({
+      isPremium: false,
+    });
+  } else {
+    andCondions.push({
+      isPremium: false,
+    });
+  }
+
+  if (searchTerm) {
+    andCondions.push({
+      OR: postSearchAbleFields.map((field) => ({
+        [field]: {
+          contains: searchTerm,
+          mode: "insensitive",
+        },
+      })),
+    });
+  }
+
+  if (Object.keys(filterData).length > 0) {
+    andCondions.push({
+      AND: Object.keys(filterData).map((key) => ({
+        [key]: {
+          equals: (filterData as any)[key],
+        },
+      })),
+    });
+  }
+
+  const whereConditions: Prisma.PostWhereInput =
+    andCondions.length > 0 ? { AND: andCondions } : {};
+
+  const [data, total] = await Promise.all([
+    prisma.post.findMany({
+      where: whereConditions,
+      skip,
+      take: limit,
+      orderBy:
+        options.sortBy && options.sortOrder
+          ? {
+              [options.sortBy]: options.sortOrder,
+            }
+          : {
+              createdAt: "desc",
+            },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        location: true,
+        image: true,
+        categoryId: true,
+        priceRange: true,
+        userId: true,
+        status: true,
+      },
+    }),
+    prisma.post.count({
+      where: whereConditions,
+    }),
+  ]);
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data,
+  };
+};
 
 const getApprovedPostById = async (id: string) => {
   const result = await prisma.post.findUnique({
@@ -336,7 +430,7 @@ const updatePostStatus = async (postId: string, status: PostStatus) => {
     throw new AppError(404, "Post not found");
   }
 
-  if (!["PENDING", "APPROVED", "REJECTED"].includes(status)) {
+  if (!["APPROVED", "REJECTED"].includes(status)) {
     throw new AppError(400, "Invalid status value");
   }
 
@@ -429,6 +523,7 @@ export const PostService = {
   getAllFromDB,
   getPendingPostFromDB,
   getApprovedPostFromDB,
+  getRejectedPostFromDB,
   getApprovedPostById,
   getPostById,
   updatePostStatus,

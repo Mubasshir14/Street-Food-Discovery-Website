@@ -5,19 +5,24 @@ import { UserRole } from "@prisma/client";
 import { PostController } from "./posts.controller";
 
 const router = express.Router();
+
 router.get(
   "/get-approved-post",
-  auth(UserRole.USER),
+  auth(UserRole.ADMIN, UserRole.USER),
   PostController.getApprovedPostFromDB
 );
-router.get("/", auth(UserRole.ADMIN), PostController.getAllFromDB);
-router.get("/:id", auth(UserRole.ADMIN), PostController.getAllFromDB);
 router.get(
   "/get-pending-post",
   auth(UserRole.ADMIN),
-
   PostController.getPendingPostFromDB
 );
+router.get(
+  "/get-rejected-post",
+  auth(UserRole.ADMIN),
+  PostController.getRejectedPostFromDB
+);
+router.get("/", auth(UserRole.ADMIN), PostController.getAllFromDB);
+router.get("/:id", auth(UserRole.ADMIN), PostController.getAllFromDB);
 
 router.get("/get-approved-post/:id", PostController.getApprovedPostById);
 
@@ -49,6 +54,10 @@ router.patch(
 
 router.delete("/:id", auth(UserRole.ADMIN), PostController.deletePost);
 
-router.patch("/premium/:id", auth(UserRole.ADMIN), PostController.makePostPremium);
+router.patch(
+  "/premium/:id",
+  auth(UserRole.ADMIN),
+  PostController.makePostPremium
+);
 
 export const PostRoutes = router;
