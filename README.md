@@ -169,6 +169,10 @@ Follow these steps to set up and run the project locally:
 ### Access: ADMIN
 ### Description: Fetch all pending posts awaiting approval.
 
+### ✅ GET /api/post/get-rejected-post
+### Access: ADMIN
+### Description: Fetch all rejected posts .
+
 ### ✅ GET /api/post/get-approved-post/:id
 ### Access: Public
 ### Description: Fetch an approved post by its ID (for viewing).
