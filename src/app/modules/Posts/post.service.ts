@@ -110,6 +110,9 @@ const getAllFromDB = async (params: any, options: IPaginationOptions) => {
         priceRange: true,
         userId: true,
         status: true,
+        comments: true,
+        votes: true,
+        reviews: true,
       },
     }),
     prisma.post.count({
@@ -187,6 +190,9 @@ const getPendingPostFromDB = async (
         priceRange: true,
         userId: true,
         status: true,
+        comments: true,
+        votes: true,
+        reviews: true,
       },
     }),
     prisma.post.count({
@@ -282,6 +288,9 @@ const getApprovedPostFromDB = async (
         priceRange: true,
         userId: true,
         status: true,
+        comments: true,
+        votes: true,
+        reviews: true,
       },
     }),
     prisma.post.count({
@@ -377,6 +386,9 @@ const getRejectedPostFromDB = async (
         priceRange: true,
         userId: true,
         status: true,
+        comments: true,
+        votes: true,
+        reviews: true,
       },
     }),
     prisma.post.count({
@@ -472,7 +484,10 @@ const getPremiumPostFromDB = async (
         priceRange: true,
         userId: true,
         status: true,
-        isPremium: true
+        isPremium: true,
+        comments: true,
+        votes: true,
+        reviews: true,
       },
     }),
     prisma.post.count({
@@ -626,5 +641,5 @@ export const PostService = {
   updatePost,
   deletePost,
   makePostPremium,
-  getPremiumPostFromDB
+  getPremiumPostFromDB,
 };
