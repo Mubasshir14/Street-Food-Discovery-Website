@@ -49,7 +49,18 @@ const createVote = async (user: IAuthUser, payload: any) => {
 };
 
 const getVote = async () => {
-  const result = await prisma.vote.findMany({});
+  const result = await prisma.vote.findMany({
+    include: {
+      user: {
+        select: {
+          name: true,
+          profilePhoto: true,
+          id: true,
+          email: true,
+        },
+      },
+    },
+  });
   return result;
 };
 
@@ -57,6 +68,16 @@ const getVoteById = async (id: string) => {
   const result = await prisma.vote.findUnique({
     where: {
       id,
+    },
+    include: {
+      user: {
+        select: {
+          name: true,
+          profilePhoto: true,
+          id: true,
+          email: true,
+        },
+      },
     },
   });
 

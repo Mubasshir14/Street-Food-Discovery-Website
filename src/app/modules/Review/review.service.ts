@@ -45,7 +45,18 @@ const createReview = async (user: IAuthUser, payload: any) => {
 };
 
 const getReview = async () => {
-  const result = await prisma.review.findMany({});
+  const result = await prisma.review.findMany({
+    include: {
+      user: {
+        select: {
+          name: true,
+          profilePhoto: true,
+          id: true,
+          email: true,
+        },
+      },
+    },
+  });
   return result;
 };
 
@@ -53,6 +64,16 @@ const getReviewById = async (id: string) => {
   const result = await prisma.review.findUnique({
     where: {
       id,
+    },
+    include: {
+      user: {
+        select: {
+          name: true,
+          profilePhoto: true,
+          id: true,
+          email: true,
+        },
+      },
     },
   });
 
