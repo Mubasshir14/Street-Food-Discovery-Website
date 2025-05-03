@@ -33,7 +33,18 @@ const createComment = async (user: IAuthUser, payload: any) => {
 };
 
 const getComment = async () => {
-  const result = await prisma.comment.findMany({});
+  const result = await prisma.comment.findMany({
+    include: {
+      user: {
+        select: {
+          name: true,
+          profilePhoto: true,
+          id: true,
+          email: true,
+        },
+      },
+    },
+  });
   return result;
 };
 
@@ -41,6 +52,16 @@ const getCommentById = async (id: string) => {
   const result = await prisma.comment.findUnique({
     where: {
       id,
+    },
+    include: {
+      user: {
+        select: {
+          name: true,
+          profilePhoto: true,
+          id: true,
+          email: true,
+        },
+      },
     },
   });
 
@@ -68,5 +89,5 @@ export const CommentService = {
   createComment,
   getComment,
   getCommentById,
-  deleteCommentById
+  deleteCommentById,
 };
