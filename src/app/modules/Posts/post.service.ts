@@ -511,6 +511,11 @@ const getApprovedPostById = async (id: string) => {
       id,
       status: PostStatus.APPROVED,
     },
+    include: {
+      comments: true,
+      reviews: true,
+      votes: true,
+    },
   });
 
   if (!result) {
@@ -523,6 +528,11 @@ const getPostById = async (id: string) => {
   const result = await prisma.post.findUnique({
     where: {
       id,
+    },
+    include: {
+      comments: true,
+      reviews: true,
+      votes: true,
     },
   });
 

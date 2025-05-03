@@ -27,7 +27,7 @@ router.get(
   PostController.getPremiumPostFromDB
 );
 router.get("/", auth(UserRole.ADMIN), PostController.getAllFromDB);
-router.get("/:id", auth(UserRole.ADMIN), PostController.getAllFromDB);
+router.get("/:id", auth(UserRole.ADMIN), PostController.getPostById);
 
 router.get("/get-approved-post/:id", PostController.getApprovedPostById);
 

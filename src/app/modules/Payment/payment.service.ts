@@ -3,24 +3,11 @@ import { IAuthUser } from "../../interfaces/common";
 import { SSLService } from "../ssl/ssl.service";
 import { v4 as uuidv4 } from "uuid";
 
-// type InitPaymentData = {
-//   amount: number;
-//   transactionId: string;
-//   name: string;
-//   email: string;
-//   address?: string;
-//   phoneNumber?: string;
-// };
-
 const initPayment = async (
   user: IAuthUser,
   amount: number,
   expiresInDays: number
 ) => {
-  //   const now = new Date();
-  //   const transactionId = `FOODWEBSITE-${now.getFullYear()}-${
-  //     now.getMonth() + 1
-  //   }-${now.getDate()}-${now.getHours()}-${now.getMinutes()}`;
   const transactionId = `Street-Food-Discovery-Website-${uuidv4()}`;
   console.log(transactionId);
 
@@ -29,8 +16,6 @@ const initPayment = async (
       email: user?.email,
     },
   });
-
-  //   http://localhost:3000/success?trx_id=FOODWEBSITE-2025-5-3-16-39
 
   const expiresAt = new Date();
   expiresAt.setDate(expiresAt.getDate() + expiresInDays);
