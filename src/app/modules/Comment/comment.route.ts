@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.get("/", CommentController.getComment);
 router.get("/:id", CommentController.getCommentById);
+router.get("/post-comment/:postId", CommentController.getCommentByPostId);
 router.post("/:postId", auth(UserRole.USER), CommentController.createComment);
 router.delete(
   "/:id",

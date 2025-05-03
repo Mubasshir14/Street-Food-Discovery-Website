@@ -35,6 +35,16 @@ const getComment = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getCommentByPostId = catchAsync(async (req: Request, res: Response) => {
+  const comment = await CommentService.getCommentByPostId(req.params.id);
+  sendResponse(res, {
+    statusCode: httpStatus.CREATED,
+    success: true,
+    message: "Post's Comments fetched successfully!",
+    data: comment,
+  });
+});
+
 const getCommentById = catchAsync(async (req: Request, res: Response) => {
   const comment = await CommentService.getCommentById(req.params.id);
 
@@ -60,6 +70,7 @@ const deleteCommentById = catchAsync(async (req: Request, res: Response) => {
 export const CommentController = {
   createComment,
   getComment,
+  getCommentByPostId,
   getCommentById,
   deleteCommentById,
 };

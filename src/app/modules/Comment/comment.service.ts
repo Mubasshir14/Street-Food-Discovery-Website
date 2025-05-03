@@ -48,6 +48,25 @@ const getComment = async () => {
   return result;
 };
 
+const getCommentByPostId = async (postId: string) => {
+  const result = await prisma.comment.findMany({
+    where: {
+      postId: postId,
+    },
+    include: {
+      user: {
+        select: {
+          name: true,
+          profilePhoto: true,
+          id: true,
+          email: true,
+        },
+      },
+    },
+  });
+  return result;
+};
+
 const getCommentById = async (id: string) => {
   const result = await prisma.comment.findUnique({
     where: {
@@ -90,4 +109,5 @@ export const CommentService = {
   getComment,
   getCommentById,
   deleteCommentById,
+  getCommentByPostId,
 };
