@@ -5,6 +5,7 @@ import sendResponse from "../../../shared/sendResponse";
 import httpStatus from "http-status";
 import AppError from "../../error/AppError";
 import { IAuthUser } from "../../interfaces/common";
+import config from "../../../config";
 
 const initPayment = catchAsync(
   async (req: Request & { user?: IAuthUser }, res: Response) => {
@@ -34,12 +35,15 @@ const initPayment = catchAsync(
 
 const validatePayment = catchAsync(async (req: Request, res: Response) => {
   const result = await PaymentService.validatePayment(req.query);
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Payment validate successfully",
-    data: result,
-  });
+  if (result) {
+    res.redirect(`${config.sslCommerz.success_url}`);
+  }
+  // sendResponse(res, {
+  //   statusCode: httpStatus.OK,
+  //   success: true,
+  //   message: "Payment validate successfully",
+  //   data: result,
+  // });
 });
 
 export const PaymentController = {

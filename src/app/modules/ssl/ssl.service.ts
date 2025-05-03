@@ -3,6 +3,11 @@ import httpStatus from "http-status";
 import { IPaymentData } from "./ssl.interface";
 import AppError from "../../error/AppError";
 import config from "../../../config";
+import SSLCommerzPayment from "sslcommerz-lts";
+
+const store_id = config.sslCommerz.store_id as string;
+const store_passwd = config.sslCommerz.store_password as string;
+const is_live = false;
 
 const initPayment = async (paymentData: IPaymentData) => {
   try {
@@ -12,7 +17,7 @@ const initPayment = async (paymentData: IPaymentData) => {
       total_amount: paymentData.amount,
       currency: "BDT",
       tran_id: paymentData.transactionId,
-      success_url: `${config.sslCommerz.success_url}?tran_id=${paymentData.transactionId}`,
+      success_url: `${config.sslCommerz.validation_api}?tran_id=${paymentData.transactionId}`,
       fail_url: config.sslCommerz.failed_url,
       cancel_url: config.sslCommerz.failed_url,
       ipn_url: "http://localhost:3030/ipn",
@@ -38,15 +43,31 @@ const initPayment = async (paymentData: IPaymentData) => {
       ship_postcode: 1000,
       ship_country: "N/A",
     };
+    const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live);
 
-    const response = await axios({
-      method: "post",
-      url: config.sslCommerz.sslPaymentApi,
-      data: data,
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    });
+    try {
+      const apiResponse = await sslcz.init(data as any);
 
-    return response.data;
+      // Redirect the user to the payment gateway
+      const GatewayPageURL = apiResponse.GatewayPageURL;
+      
+      if (GatewayPageURL) {
+        return GatewayPageURL;
+      } else {
+        throw new AppError(500, "Failed to generate payment gateway URL.");
+      }
+    } catch (error) {
+      throw new AppError(500, "An error occurred while processing payment.");
+    }
+
+    // const response = await axios({
+    //   method: "post",
+    //   url: config.sslCommerz.sslPaymentApi,
+    //   data: data,
+    //   headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    // });
+
+    // return response.data;
   } catch (err) {
     throw new AppError(httpStatus.BAD_REQUEST, "Payment error occured!");
   }
