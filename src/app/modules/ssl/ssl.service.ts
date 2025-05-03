@@ -12,7 +12,7 @@ const initPayment = async (paymentData: IPaymentData) => {
       total_amount: paymentData.amount,
       currency: "BDT",
       tran_id: paymentData.transactionId,
-      success_url: `${config.sslCommerz.success_url}?trx_id=${paymentData.transactionId}`,
+      success_url: `${config.sslCommerz.success_url}?tran_id=${paymentData.transactionId}`,
       fail_url: config.sslCommerz.failed_url,
       cancel_url: config.sslCommerz.failed_url,
       ipn_url: "http://localhost:3030/ipn",
@@ -52,20 +52,20 @@ const initPayment = async (paymentData: IPaymentData) => {
   }
 };
 
-const validatePayment = async (payload: any) => {
-  try {
-    const response = await axios({
-      method: "GET",
-      url: `${config.sslCommerz.validation_api}?val_id=${payload.val_id}&store_id=${config.sslCommerz.store_id}&store_passwd=${config.sslCommerz.store_password}&format=json`,
-    });
+// const validatePayment = async (payload: any) => {
+//   try {
+//     const response = await axios({
+//       method: "GET",
+//       url: `${config.sslCommerz.validation_api}?val_id=${payload.val_id}&store_id=${config.sslCommerz.store_id}&store_passwd=${config.sslCommerz.store_password}&format=json`,
+//     });
 
-    return response.data;
-  } catch (err) {
-    throw new AppError(httpStatus.BAD_REQUEST, "Payment validation failed!");
-  }
-};
+//     return response.data;
+//   } catch (err) {
+//     throw new AppError(httpStatus.BAD_REQUEST, "Payment validation failed!");
+//   }
+// };
 
 export const SSLService = {
   initPayment,
-  validatePayment,
+  // validatePayment,
 };

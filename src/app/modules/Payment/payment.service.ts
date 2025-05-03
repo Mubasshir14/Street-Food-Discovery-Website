@@ -9,7 +9,6 @@ const initPayment = async (
   expiresInDays: number
 ) => {
   const transactionId = `Street-Food-Discovery-Website-${uuidv4()}`;
-  console.log(transactionId);
 
   const userData = await prisma.user.findUniqueOrThrow({
     where: {
