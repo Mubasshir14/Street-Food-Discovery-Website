@@ -1,6 +1,7 @@
 import prisma from "../../../shared/prisma";
 import { IAuthUser } from "../../interfaces/common";
 import { SSLService } from "../ssl/ssl.service";
+import { v4 as uuidv4 } from "uuid";
 
 // type InitPaymentData = {
 //   amount: number;
@@ -16,10 +17,12 @@ const initPayment = async (
   amount: number,
   expiresInDays: number
 ) => {
-  const now = new Date();
-  const transactionId = `FOODWEBSITE-${now.getFullYear()}-${
-    now.getMonth() + 1
-  }-${now.getDate()}-${now.getHours()}-${now.getMinutes()}`;
+  //   const now = new Date();
+  //   const transactionId = `FOODWEBSITE-${now.getFullYear()}-${
+  //     now.getMonth() + 1
+  //   }-${now.getDate()}-${now.getHours()}-${now.getMinutes()}`;
+  const transactionId = `Street-Food-Discovery-Website-${uuidv4()}`;
+  console.log(transactionId);
 
   const userData = await prisma.user.findUniqueOrThrow({
     where: {
@@ -77,9 +80,9 @@ const validatePayment = async (payload: any) => {
         paymentId: updatedPayment.paymentId,
         subcriptionStatus: "ACTIVE",
         expiresAt: updatedPayment.expiresAt,
+        status: "PAID",
       },
     });
-    console.log(sub);
 
     await tx.user.update({
       where: {
