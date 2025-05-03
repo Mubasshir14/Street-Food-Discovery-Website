@@ -639,6 +639,27 @@ const makePostPremium = async (postId: string) => {
   return updated;
 };
 
+const makePostRegular = async (postId: string) => {
+  const existingPost = await prisma.post.findUnique({
+    where: { id: postId },
+  });
+
+  if (!existingPost) {
+    throw new AppError(404, "Post not found");
+  }
+
+  if (existingPost.status !== "APPROVED") {
+    throw new AppError(400, "Only approved posts can be made premium");
+  }
+
+  const updated = await prisma.post.update({
+    where: { id: postId },
+    data: { isPremium: false },
+  });
+
+  return updated;
+};
+
 export const PostService = {
   createPost,
   getAllFromDB,
@@ -651,5 +672,6 @@ export const PostService = {
   updatePost,
   deletePost,
   makePostPremium,
+  makePostRegular,
   getPremiumPostFromDB,
 };

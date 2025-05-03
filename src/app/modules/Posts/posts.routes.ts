@@ -47,6 +47,7 @@ router.patch(
   PostController.updatePostStatus
 );
 
+
 router.patch(
   "/update-post/:id",
   auth(UserRole.USER),
@@ -63,6 +64,12 @@ router.patch(
   "/premium/:id",
   auth(UserRole.ADMIN),
   PostController.makePostPremium
+);
+
+router.patch(
+  "/regular/:id",
+  auth(UserRole.ADMIN),
+  PostController.makePostRegular
 );
 
 export const PostRoutes = router;

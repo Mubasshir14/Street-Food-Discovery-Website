@@ -51,7 +51,6 @@ const getPendingPostFromDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-
 const getApprovedPostFromDB = catchAsync(
   async (req: Request & { user?: IAuthUser }, res: Response) => {
     const filters = pick(req.query, postFilterableFields);
@@ -196,6 +195,19 @@ const makePostPremium: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
+const makePostRegular: RequestHandler = catchAsync(async (req, res) => {
+  const postId = req.params.id;
+
+  const result = await PostService.makePostRegular(postId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Post updated regular successfully!",
+    data: result,
+  });
+});
+
 export const PostController = {
   createPost,
   getAllFromDB,
@@ -209,4 +221,5 @@ export const PostController = {
   updatePost,
   deletePost,
   makePostPremium,
+  makePostRegular,
 };
