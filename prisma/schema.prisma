@@ -94,6 +94,7 @@ model Subscription {
   user      User               @relation(fields: [userId], references: [id])
   paymentId String             @unique
   status    SubscriptionStatus
+  expiresAt  DateTime?
   createdAt DateTime           @default(now())
   updatedAt DateTime           @updatedAt
 }

@@ -29,17 +29,15 @@ const loginUser: RequestHandler = catchAsync(
     const result = await AuthServices.loginUser(req.body);
     const { accessToken, refresshToken } = result;
 
-
     res.cookie("refreshToken", refresshToken, {
-      secure: false, 
+      secure: false,
       httpOnly: true,
     });
 
-    
     res.cookie("accessToken", accessToken, {
-      secure: false, 
+      secure: false,
       httpOnly: true,
-      expires: new Date(Date.now() + 3600000), 
+      expires: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
     });
 
     sendResponse(res, {
@@ -47,12 +45,11 @@ const loginUser: RequestHandler = catchAsync(
       success: true,
       message: "Logged in Successfully!",
       data: {
-        accessToken: result.accessToken, 
+        accessToken: result.accessToken,
       },
     });
   }
 );
-
 
 const refreshToken: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
