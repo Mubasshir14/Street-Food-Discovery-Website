@@ -13,28 +13,38 @@ import { SSLService } from "../ssl/ssl.service";
 
 const initPayment = async (
   user: IAuthUser,
-  transactionId: string,
   amount: number,
   expiresInDays: number
 ) => {
-  const subscription = await prisma.subscription.findUniqueOrThrow({
-    where: {
-      paymentId: transactionId,
-    },
-    include: {
-      user: true,
-    },
-  });
+  const now = new Date();
+  const transactionId = `FOODWEBSITE-${now.getFullYear()}-${
+    now.getMonth() + 1
+  }-${now.getDate()}-${now.getHours()}-${now.getMinutes()}`;
 
   const userData = await prisma.user.findUniqueOrThrow({
     where: {
-      id: user?.email,
+      email: user?.email,
+    },
+  });
+
+  //   http://localhost:3000/success?trx_id=FOODWEBSITE-2025-5-3-16-39
+
+  const expiresAt = new Date();
+  expiresAt.setDate(expiresAt.getDate() + expiresInDays);
+
+  const newSubscription = await prisma.payment.create({
+    data: {
+      amount,
+      paymentId: transactionId,
+      userId: userData.id,
+      expiresAt,
+      status: "UNPAID",
     },
   });
 
   const initPaymentData = {
     amount,
-    transactionId: subscription.paymentId,
+    transactionId: transactionId,
     name: userData.name || "Unknown",
     email: userData.email,
     address: "N/A",
@@ -51,17 +61,25 @@ const initPayment = async (
 };
 
 const validatePayment = async (payload: any) => {
-  const response = payload;
-
   await prisma.$transaction(async (tx) => {
-    const updatedPayment = await tx.subscription.update({
+    const updatedPayment = await tx.payment.update({
       where: {
-        paymentId: response.tran_id,
+        paymentId: payload.trx_id,
       },
       data: {
         status: "PAID",
       },
     });
+
+    const sub = await tx.subscription.create({
+      data: {
+        userId: updatedPayment.userId,
+        paymentId: updatedPayment.paymentId,
+        subcriptionStatus: "ACTIVE",
+        expiresAt: updatedPayment.expiresAt,
+      },
+    });
+    console.log(sub);
 
     await tx.user.update({
       where: {

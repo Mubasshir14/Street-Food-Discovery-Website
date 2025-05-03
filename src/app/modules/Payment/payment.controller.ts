@@ -8,7 +8,7 @@ import { IAuthUser } from "../../interfaces/common";
 
 const initPayment = catchAsync(
   async (req: Request & { user?: IAuthUser }, res: Response) => {
-    const { amount, expiresIn, transactionId } = req.body;
+    const { amount, expiresIn } = req.body;
     const user = req.user;
     if (!amount || !expiresIn) {
       throw new AppError(
@@ -19,7 +19,6 @@ const initPayment = catchAsync(
 
     const result = await PaymentService.initPayment(
       user as IAuthUser,
-      transactionId,
       amount,
       expiresIn
     );
