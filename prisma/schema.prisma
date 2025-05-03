@@ -93,7 +93,8 @@ model Subscription {
   userId    String
   user      User               @relation(fields: [userId], references: [id])
   paymentId String             @unique
-  status    SubscriptionStatus
+  status             PaymentStatus @default(UNPAID)
+  subcriptionStatus    SubscriptionStatus
   expiresAt  DateTime?
   createdAt DateTime           @default(now())
   updatedAt DateTime           @updatedAt
@@ -125,4 +126,9 @@ enum SubscriptionStatus {
 enum VoteType {
   UPVOTE
   DOWNVOTE
+}
+
+enum PaymentStatus {
+  PAID
+  UNPAID
 }

@@ -26,5 +26,7 @@ export default {
     failed_url: process.env.FAIL_URL,
     cancel_url: process.env.CANCEL_URL,
     is_live: process.env.is_live,
+    sslPaymentApi: process.env.SSL_PAYMENT_API,
+    validation_api: process.env.VALIDATION_API,
   },
 };
