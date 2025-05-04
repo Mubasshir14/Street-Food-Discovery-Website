@@ -124,9 +124,47 @@ const deleteCategory = (id) => __awaiter(void 0, void 0, void 0, function* () {
         },
     });
 });
+const getAdminDashboardStats = () => __awaiter(void 0, void 0, void 0, function* () {
+    const [totalPosts, pendingPosts, approvedPosts, rejectedPosts, users, subscriptions, activeSubscriptions, payments,] = yield Promise.all([
+        prisma_1.default.post.count(),
+        prisma_1.default.post.count({ where: { status: "PENDING" } }),
+        prisma_1.default.post.count({ where: { status: "APPROVED" } }),
+        prisma_1.default.post.count({ where: { status: "REJECTED" } }),
+        prisma_1.default.user.count(),
+        prisma_1.default.subscription.count(),
+        prisma_1.default.subscription.count({ where: { subcriptionStatus: "ACTIVE" } }),
+        prisma_1.default.payment.count({ where: { status: "PAID" } }),
+    ]);
+    return {
+        totalPosts,
+        pendingPosts,
+        approvedPosts,
+        rejectedPosts,
+        users,
+        subscriptions,
+        activeSubscriptions,
+        payments,
+    };
+});
+const getPaymentByMonth = () => __awaiter(void 0, void 0, void 0, function* () {
+    const paymentsByMonth = yield prisma_1.default.$queryRaw `
+      SELECT 
+        TO_CHAR("createdAt", 'Mon') AS month, 
+        COUNT(*) AS count
+      FROM "Payment"
+      GROUP BY month
+      ORDER BY MIN("createdAt")
+    `;
+    return paymentsByMonth.map((p) => ({
+        name: p.month,
+        payments: Number(p.count),
+    }));
+});
 exports.CategoryService = {
     createCategory,
     getAllFromDB,
     getAllFromDBByID,
     deleteCategory,
+    getAdminDashboardStats,
+    getPaymentByMonth,
 };

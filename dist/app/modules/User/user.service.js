@@ -183,6 +183,7 @@ const getMyProfile = (user) => __awaiter(void 0, void 0, void 0, function* () {
             role: true,
             status: true,
             profilePhoto: true,
+            isPremium: true,
         },
     });
     const profileInfo = yield prisma_2.default.user.findUnique({
@@ -193,6 +194,7 @@ const getMyProfile = (user) => __awaiter(void 0, void 0, void 0, function* () {
             role: true,
             status: true,
             profilePhoto: true,
+            isPremium: true,
         },
     });
     return Object.assign(Object.assign({}, userInfo), profileInfo);

@@ -11,10 +11,12 @@ const prisma_1 = require("../../../../generated/prisma");
 const fileUploader_1 = require("../../../helpers/fileUploader");
 const router = express_1.default.Router();
 router.get("/", category_controller_1.CategoryController.getAllFromDB);
-router.get("/:id", category_controller_1.CategoryController.getAllFromDBByID);
+router.get("/get-dashboard-overview", category_controller_1.CategoryController.getAdminDashboardStats);
+router.get("/get-payment-overview", category_controller_1.CategoryController.getPaymentByMonth);
 router.post("/create-category", (0, auth_1.default)(prisma_1.UserRole.ADMIN), fileUploader_1.FileUploader.upload.single("file"), (req, res, next) => {
     req.body = JSON.parse(req.body.data);
     return category_controller_1.CategoryController.createCategory(req, res, next);
 });
+router.get("/:id", category_controller_1.CategoryController.getAllFromDBByID);
 router.delete("/:id", (0, auth_1.default)(prisma_1.UserRole.ADMIN), category_controller_1.CategoryController.deleteCategory);
 exports.CategoryRoutes = router;
