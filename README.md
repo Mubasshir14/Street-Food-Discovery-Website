@@ -7,7 +7,7 @@ Check out our [Live Link](https://street-food-website-ten.vercel.app/)
 ## Description
 This project is a web application designed to allow users to discover, post, review, and interact with street food spots. The website caters to multiple user roles, including Normal Users, Premium Users, and Admins, each with varying levels of access and functionality.
 
-
+![Street Food Discovery ](https://i.ibb.co.com/1JjzKymK/italian-food-stationery-template-23-2148559232.jpg)
 
 ## 🛠 Tech Stack
 - **Node.js:** JavaScript runtime for scalable backend development.
