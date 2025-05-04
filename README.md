@@ -72,206 +72,76 @@ Each with different access and permissions.
   ```
 
 
-## ✨Endpoints:
+## 📡 API Endpoints
 
-## ✅ USER ROUTES - /api/user
-### ============================================
+### ✅ USER ROUTES - `/api/user`
 
-### ✅ GET /api/user/
-### Access: ADMIN
-### Description: Fetch all users from the database.
-
-### ✅ GET /api/user/me
-### Access: ADMIN, USER
-### Description: Get profile details of the currently logged-in user.
-
-### ✅ POST /api/user/create-admin
-### Access: Public (or depends on route-level restriction)
-### Description: Create a new admin user.
-### Note: Accepts a file (e.g. profile picture) and JSON data in multipart/form-data.
-
-### ✅ POST /api/user/create-user
-### Access: Public
-### Description: Create a new regular user.
-### Note: Accepts a file and JSON data in multipart/form-data.
-
-### ✅ PATCH /api/user/:id/status
-## Access: ADMIN
-### Description: Change a user’s profile status (e.g., activate, deactivate).
-
-### ✅ PATCH /api/user/update-my-profile
-### Access: ADMIN, USER
-### Description: Update own profile with new data or profile image.
-### Note: Accepts multipart/form-data.
-
-### ============================================
+- `GET /` – 🔒 **Admin**: Get all users  
+- `GET /me` – 🔐 **Logged-in**: Get own profile  
+- `POST /create-admin` – 🌐 **Public**: Create admin  
+- `POST /create-user` – 🌐 **Public**: Register user  
+- `PATCH /:id/status` – 🔒 **Admin**: Update status  
+- `PATCH /update-my-profile` – 🔐 **Logged-in**: Update own profile  
 
 
-## ✅ AUTH ROUTES - /api/auth
-### ============================================
+### ✅ AUTH ROUTES - `/api/auth`
 
-### ✅ POST /api/auth/login
-### Access: Public
-### Description: Logs in a user and returns access & refresh tokens.
-
-### ✅ POST /api/auth/refresh-token
-### Access: Public
-### Description: Returns new access token using a valid refresh token.
-
-### ✅ POST /api/auth/change-password
-### Access: ADMIN, USER
-### Description: Authenticated users can change their password.
-
- ✅ POST /api/auth/forgot-password
-### Access: Public
-### Description: Sends a password reset link/token to the user's email.
-
-### ✅ POST /api/auth/reset-password
-### Access: Public
-### Description: Resets the password using a valid token and new password.
-
-### ============================================
+- `POST /login` – 🌐 **Public**: Login & get tokens  
+- `POST /refresh-token` – 🌐 **Public**: Get new token  
+- `POST /change-password` – 🔐 **Logged-in**: Change password  
+- `POST /forgot-password` – 🌐 **Public**: Request reset link  
+- `POST /reset-password` – 🌐 **Public**: Reset password  
 
 
 
-## ✅ CATEGORY ROUTES - /api/category
-### ============================================
+### ✅ CATEGORY ROUTES - `/api/category`
 
-### ✅ GET /api/category/
-### Access: Public
-### Description: Fetch all categories from the database.
-
-### ✅ GET /api/category/:id
-### Access: Public
-### Description: Fetch a single category by its ID.
-
-### ✅ POST /api/category/create-category
-### Access: ADMIN, USER
-### Description: Create a new category. Accepts multipart/form-data with an image file and JSON data.
-
-### ✅ DELETE /api/category/:id
-## Access: ADMIN
-### Description: Delete a category by its ID.
-
-### ============================================
+- `GET /` – 🌐 **Public**: Get all categories  
+- `GET /:id` – 🌐 **Public**: Get one category  
+- `POST /create-category` – 🔐 **Admin/User**: Add category  
+- `DELETE /:id` – 🔒 **Admin**: Delete category  
 
 
 
-## ✅ POSTS ROUTES - /api/post
-### ============================================
 
-### ✅ GET /api/post/get-approved-post
-### Access: USER
-### Description: Fetch all approved posts (accessible to regular users).
+### ✅ POSTS ROUTES - `/api/post`
 
-### ✅ GET /api/post
-### Access: ADMIN
-### Description: Fetch all posts from the database (for admin).
-
-### ✅ GET /api/post/:id
-### Access: ADMIN
-### Description: Fetch a specific post by ID (for admin).
-
-### ✅ GET /api/post/get-pending-post
-### Access: ADMIN
-### Description: Fetch all pending posts awaiting approval.
-
-### ✅ GET /api/post/get-rejected-post
-### Access: ADMIN
-### Description: Fetch all rejected posts .
-
-### ✅ GET /api/post/get-approved-post/:id
-### Access: Public
-### Description: Fetch an approved post by its ID (for viewing).
-
-### ✅ POST /api/post/create-post
-### Access: USER
-### Description: Create a new post with image. Accepts multipart/form-data (file + JSON).
-
-### ✅ PATCH /api/post/update-status/:id
-### Access: ADMIN
-### Description: Update the approval status of a post (PENDING/APPROVED/REJECTED).
-
-### ✅ PATCH /api/post/update-post/:id
-### Access: USER
-### Description: Update your own post with new data or image. Accepts multipart/form-data.
-
-### ✅ PATCH /api/post/premium/:id
-### Access: ADMIN
-### Description: Mark a post as premium (only if the post is already approved).
-
-### ✅ DELETE /api/post/:id
-### Access: ADMIN
-### Description: Delete a post by its ID.
-
-# ============================================
+- `GET /get-approved-post` – 🔐 **User**: Get approved posts  
+- `GET /` – 🔒 **Admin**: Get all posts  
+- `GET /:id` – 🔒 **Admin**: Get single post  
+- `GET /get-pending-post` – 🔒 **Admin**: Get pending posts  
+- `GET /get-rejected-post` – 🔒 **Admin**: Get rejected posts  
+- `GET /get-approved-post/:id` – 🌐 **Public**: View single approved post  
+- `POST /create-post` – 🔐 **User**: Add post  
+- `PATCH /update-status/:id` – 🔒 **Admin**: Change post status  
+- `PATCH /update-post/:id` – 🔐 **User**: Update own post  
+- `PATCH /premium/:id` – 🔒 **Admin**: Mark post as premium  
+- `DELETE /:id` – 🔒 **Admin**: Delete post  
 
 
+### ✅ COMMENT ROUTES - `/api/comment`
 
-## ✅ COMMENT ROUTES - /api/comment
-### ============================================
-
-### ✅ GET /api/comment/
-### Access: Public
-### Description: Fetch all comments from the database.
-
-### ✅ GET /api/comment/:id
-### Access: Public
-### Description: Fetch a specific comment by its ID.
-
-### ✅ POST /api/comment/:postId
-### Access: USER
-### Description: Add a comment to a post. Requires authentication.
-
-### ✅ DELETE /api/comment/:id
-### Access: ADMIN
-### Description: Delete a specific comment by ID. Requires admin access.
-
-### ============================================
+- `GET /` – 🌐 **Public**: All comments  
+- `GET /:id` – 🌐 **Public**: One comment  
+- `POST /:postId` – 🔐 **User**: Add comment  
+- `DELETE /:id` – 🔒 **Admin**: Delete comment  
 
 
+### ✅ VOTE ROUTES - `/api/vote`
 
-## ✅ VOTE ROUTES - /api/vote
-### ============================================
-
-### ✅ GET /api/vote/
-### Access: Public
-### Description: Fetch all votes from the database.
-
-### ✅ GET /api/vote/:id
-### Access: Public
-### Description: Fetch a specific vote by its ID.
-
-### ✅ POST /api/vote/:postId
-### Access: USER
-### Description: Cast a vote on a post. Requires authentication.
-
-### ✅ DELETE /api/vote/:postId
-### Access: USER
-### Description: Remove a vote from a post. Requires authentication.
-
-### ============================================
+- `GET /` – 🌐 **Public**: All votes  
+- `GET /:id` – 🌐 **Public**: One vote  
+- `POST /:postId` – 🔐 **User**: Vote on a post  
+- `DELETE /:postId` – 🔐 **User**: Remove vote  
 
 
+### ✅ REVIEW ROUTES - `/api/review`
 
-## ✅ REVIEW ROUTES - /api/review
-### ============================================
+- `GET /` – 🌐 **Public**: All reviews  
+- `GET /:id` – 🌐 **Public**: One review  
+- `POST /:postId` – 🔐 **User**: Submit review  
+- `DELETE /:postId` – 🔐 **User**: Delete own review  
 
-### ✅ GET /api/review/
-### Access: Public
-### Description: Fetch all reviews from the database.
-
-### ✅ GET /api/review/:id
-### Access: Public
-### Description: Fetch a specific review by its ID.
-
-### ✅ POST /api/review/:postId
-### Access: USER
-### Description: Submit a review for a post. Requires authentication.
-
-### ✅ DELETE /api/review/:postId
-### Access: USER
-### Description: Delete your review from a post. Requires authentication.
 
 
 
