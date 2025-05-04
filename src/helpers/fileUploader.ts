@@ -3,6 +3,7 @@ import path from "path";
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 import { ICloudinaryResponse, IFile } from "../app/interfaces/file";
+import config from "../config";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -19,9 +20,9 @@ const uploadToCloudinary = async (
   file: IFile
 ): Promise<ICloudinaryResponse | undefined> => {
   cloudinary.config({
-    cloud_name: "dkwn9bool",
-    api_key: "321321414891178",
-    api_secret: "Gp6xg9-eOc0ylgOInGZ0CLnAfyY",
+    cloud_name: config.cloudianary.cloud_name,
+    api_key: config.cloudianary.cloud_api_key,
+    api_secret: config.cloudianary.cloud_api_secret,
   });
 
   return new Promise((resolve, reject) => {
