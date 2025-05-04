@@ -1,6 +1,7 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  provider      = "prisma-client-js"
+  output        = "../generated/prisma"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
@@ -24,6 +25,7 @@ model User {
   votes         Vote[]
   reviews       Review[]
   subscriptions Subscription[]
+  payment       Payment[]
 }
 
 model Post {
@@ -49,6 +51,7 @@ model Post {
 model Category {
   id        String   @id @default(uuid())
   name      String   @unique
+  image     String?
   posts     Post[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -88,13 +91,27 @@ model Review {
 }
 
 model Subscription {
-  id        String             @id @default(uuid())
+  id                String             @id @default(uuid())
+  userId            String
+  user              User               @relation(fields: [userId], references: [id])
+  paymentId         String             @unique
+  status            PaymentStatus      @default(UNPAID)
+  subcriptionStatus SubscriptionStatus
+  expiresAt         DateTime?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+}
+
+model Payment {
+  id        String        @id @default(uuid())
+  amount    Int
   userId    String
-  user      User               @relation(fields: [userId], references: [id])
-  paymentId String             @unique
-  status    SubscriptionStatus
-  createdAt DateTime           @default(now())
-  updatedAt DateTime           @updatedAt
+  user      User          @relation(fields: [userId], references: [id])
+  paymentId String        @unique
+  status    PaymentStatus @default(UNPAID)
+  expiresAt DateTime?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 }
 
 enum UserRole {
@@ -123,4 +140,9 @@ enum SubscriptionStatus {
 enum VoteType {
   UPVOTE
   DOWNVOTE
+}
+
+enum PaymentStatus {
+  PAID
+  UNPAID
 }

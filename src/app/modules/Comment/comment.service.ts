@@ -51,7 +51,7 @@ const getComment = async () => {
 const getCommentByPostId = async (postId: string) => {
   const result = await prisma.comment.findMany({
     where: {
-      postId: postId,
+      postId: postId
     },
     include: {
       user: {
@@ -107,7 +107,7 @@ const deleteCommentById = async (id: string) => {
 export const CommentService = {
   createComment,
   getComment,
+  getCommentByPostId,
   getCommentById,
   deleteCommentById,
-  getCommentByPostId,
 };

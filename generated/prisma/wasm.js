@@ -151,6 +151,7 @@ exports.Prisma.PostScalarFieldEnum = {
 exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  image: 'image',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -187,6 +188,19 @@ exports.Prisma.SubscriptionScalarFieldEnum = {
   userId: 'userId',
   paymentId: 'paymentId',
   status: 'status',
+  subcriptionStatus: 'subcriptionStatus',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PaymentScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  userId: 'userId',
+  paymentId: 'paymentId',
+  status: 'status',
+  expiresAt: 'expiresAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -227,6 +241,11 @@ exports.VoteType = exports.$Enums.VoteType = {
   DOWNVOTE: 'DOWNVOTE'
 };
 
+exports.PaymentStatus = exports.$Enums.PaymentStatus = {
+  PAID: 'PAID',
+  UNPAID: 'UNPAID'
+};
+
 exports.SubscriptionStatus = exports.$Enums.SubscriptionStatus = {
   ACTIVE: 'ACTIVE',
   EXPIRED: 'EXPIRED',
@@ -240,7 +259,8 @@ exports.Prisma.ModelName = {
   Comment: 'Comment',
   Vote: 'Vote',
   Review: 'Review',
-  Subscription: 'Subscription'
+  Subscription: 'Subscription',
+  Payment: 'Payment'
 };
 
 /**

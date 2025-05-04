@@ -36,6 +36,7 @@ const getComment = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getCommentByPostId = catchAsync(async (req: Request, res: Response) => {
+  console.log(req.params.id);
   const comment = await CommentService.getCommentByPostId(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
