@@ -65,7 +65,7 @@ cloudinary.config({
 });
 
 const isVercel = process.env.VERCEL === '1';
-const uploadPath = isVercel ? '/uploads' : path.join(process.cwd(), 'uploads');
+const uploadPath = isVercel ? '/tmp' : path.join(process.cwd(), 'tmp');
 
 // Create local tmp folder if it doesn't exist
 if (!isVercel && !fs.existsSync(uploadPath)) {
