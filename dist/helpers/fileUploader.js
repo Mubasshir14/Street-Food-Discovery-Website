@@ -17,6 +17,7 @@ const multer_1 = __importDefault(require("multer"));
 const path_1 = __importDefault(require("path"));
 const cloudinary_1 = require("cloudinary");
 const fs_1 = __importDefault(require("fs"));
+const config_1 = __importDefault(require("../config"));
 const storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
         cb(null, path_1.default.join(process.cwd(), "/uploads"));
@@ -28,9 +29,9 @@ const storage = multer_1.default.diskStorage({
 const upload = (0, multer_1.default)({ storage: storage });
 const uploadToCloudinary = (file) => __awaiter(void 0, void 0, void 0, function* () {
     cloudinary_1.v2.config({
-        cloud_name: "dkwn9bool",
-        api_key: "321321414891178",
-        api_secret: "Gp6xg9-eOc0ylgOInGZ0CLnAfyY",
+        cloud_name: config_1.default.cloudianary.cloud_name,
+        api_key: config_1.default.cloudianary.cloud_api_key,
+        api_secret: config_1.default.cloudianary.cloud_api_secret,
     });
     return new Promise((resolve, reject) => {
         cloudinary_1.v2.uploader.upload(file === null || file === void 0 ? void 0 : file.path, 
