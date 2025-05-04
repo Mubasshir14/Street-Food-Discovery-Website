@@ -5,10 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryRoutes = void 0;
 const express_1 = __importDefault(require("express"));
-const fileUploader_1 = require("../../../helpers/fileUploader");
 const auth_1 = __importDefault(require("../../middlewares/auth"));
 const category_controller_1 = require("./category.controller");
 const prisma_1 = require("../../../../generated/prisma");
+const fileUploader_1 = require("../../../helpers/fileUploader");
 const router = express_1.default.Router();
 router.get("/", category_controller_1.CategoryController.getAllFromDB);
 router.get("/:id", category_controller_1.CategoryController.getAllFromDBByID);

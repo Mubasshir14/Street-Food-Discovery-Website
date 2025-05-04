@@ -1,9 +1,8 @@
-// import multer from "multer";
-// import path from "path";
-// import { v2 as cloudinary } from "cloudinary";
-// import fs from "fs";
-// import { ICloudinaryResponse, IFile } from "../app/interfaces/file";
-// import config from "../config";
+import multer from "multer";
+import path from "path";
+import { v2 as cloudinary } from "cloudinary";
+import fs from "fs";
+import { ICloudinaryResponse, IFile } from "../app/interfaces/file";
 
 // const storage = multer.diskStorage({
 //   destination: function (req, file, cb) {
@@ -14,90 +13,42 @@
 //   },
 // });
 
-// const upload = multer({ storage: storage });
-
-// const uploadToCloudinary = async (
-//   file: IFile
-// ): Promise<ICloudinaryResponse | undefined> => {
-//   cloudinary.config({
-//     cloud_name: config.cloudianary.cloud_name,
-//     api_key: config.cloudianary.cloud_api_key,
-//     api_secret: config.cloudianary.cloud_api_secret,
-//   });
-
-//   return new Promise((resolve, reject) => {
-//     cloudinary.uploader.upload(
-//       file?.path,
-//       //   {
-//       //     public_id: file?.originalname,
-//       //   },
-//       (error: Error, result: ICloudinaryResponse) => {
-//         fs.unlinkSync(file?.path);
-//         if (error) {
-//           reject(error);
-//         } else {
-//           resolve(result);
-//         }
-//       }
-//     );
-//   });
-// };
-
-// export const FileUploader = {
-//   upload,
-//   uploadToCloudinary,
-// };
-
-
-
-
-import multer from "multer";
-import path from "path";
-import { v2 as cloudinary } from "cloudinary";
-import fs from "fs";
-import config from "../config";
-import { ICloudinaryResponse, IFile } from "../app/interfaces/file";
-
-cloudinary.config({
-  cloud_name: config.cloudianary.cloud_name,
-  api_key: config.cloudianary.cloud_api_key,
-  api_secret: config.cloudianary.cloud_api_secret,
-});
-
-const isVercel = process.env.VERCEL === '1';
-const uploadPath = isVercel ? '/tmp' : path.join(process.cwd(), 'tmp');
-
-// Create local tmp folder if it doesn't exist
-if (!isVercel && !fs.existsSync(uploadPath)) {
-  fs.mkdirSync(uploadPath);
-}
-
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, uploadPath);
+    cb(null, "/tmp"); // ✅ Vercel এ writable path
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname);
+    cb(null, file.originalname);
   },
 });
 
-const upload = multer({ storage });
 
-const uploadToCloudinary = async (file: IFile): Promise<ICloudinaryResponse | undefined> => {
+const upload = multer({ storage: storage });
+
+const uploadToCloudinary = async (
+  file: IFile
+): Promise<ICloudinaryResponse | undefined> => {
+  cloudinary.config({
+    cloud_name: "dtvievcwd",
+    api_key: "948253568621974",
+    api_secret: "N3DupnhD6k_IMs3-eW4UnAfMIWw",
+  });
+
   return new Promise((resolve, reject) => {
-    cloudinary.uploader.upload(file.path, (error: Error, result: ICloudinaryResponse) => {
-      try {
-        fs.unlinkSync(file.path);
-      } catch (e) {
-        console.error('Error deleting temp file:', e);
+    cloudinary.uploader.upload(
+      file?.path,
+      //   {
+      //     public_id: file?.originalname,
+      //   },
+      (error: Error, result: ICloudinaryResponse) => {
+        fs.unlinkSync(file?.path);
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
       }
-
-      if (error) {
-        reject(error);
-      } else {
-        resolve(result);
-      }
-    });
+    );
   });
 };
 
