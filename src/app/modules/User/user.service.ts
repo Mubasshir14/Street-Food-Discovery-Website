@@ -154,6 +154,7 @@ const getMyProfile = async (user: IAuthUser) => {
       role: true,
       status: true,
       profilePhoto: true,
+      isPremium: true,
     },
   });
 
@@ -165,6 +166,7 @@ const getMyProfile = async (user: IAuthUser) => {
       role: true,
       status: true,
       profilePhoto: true,
+      isPremium: true,
     },
   });
 
