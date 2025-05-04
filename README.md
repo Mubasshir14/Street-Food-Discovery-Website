@@ -1,36 +1,43 @@
-# Street Food Discovery Website
+# 🍜 Street Food Discovery Website
 
-# 🌐 Live Backend Link
-Check out our [Live Link](https://street-food-website-ten.vercel.app/) 
+## 🌐 Live Backend Link
+[🔗 Visit Live](https://street-food-website-ten.vercel.app/)
 
+## 📖 Description
+A web application for discovering, posting, reviewing, and interacting with **street food spots**. It supports multiple roles:
 
-## Description
-This project is a web application designed to allow users to discover, post, review, and interact with street food spots. The website caters to multiple user roles, including Normal Users, Premium Users, and Admins, each with varying levels of access and functionality.
+- 👤 Normal Users
+- 💎 Premium Users
+- 🛡️ Admins
 
-![Street Food Discovery ](https://i.ibb.co.com/1JjzKymK/italian-food-stationery-template-23-2148559232.jpg)
+Each with different access and permissions.
+
+![Street Food Discovery](https://i.ibb.co.com/1JjzKymK/italian-food-stationery-template-23-2148559232.jpg)
+
+---
 
 ## 🛠 Tech Stack
-- **Node.js:** JavaScript runtime for scalable backend development.
-- **Express.js:** Lightweight framework for building RESTful APIs.
-- **TypeScript:** Adds static typing for safer and maintainable code.
-- **Prisma ORM:** Simplifies database interactions with PostgreSQL.
-- **PostgreSQL:** Reliable relational database for data persistence.
 
+- **Node.js** – JavaScript runtime for scalable backend
+- **Express.js** – Framework for REST APIs
+- **TypeScript** – Type-safe development
+- **Prisma ORM** – Easy database access
+- **PostgreSQL** – Relational database
+
+---
 
 ## ⚙️ Setup Guide
-Follow these steps to set up and run the project locally:
 
- ## 📋 Prerequisites
+### 📋 Prerequisites
 
-- **Node.js** (version 16 or above)
-- **npm** or **yarn**
-- **PostgreSQL** (v12 or higher)
-- **GIT** 
+- Node.js (v16+)
+- npm or yarn
+- PostgreSQL (v12+)
+- Git
 
-## Installation
+### 🚀 Installation Steps
 
 1. **Clone the repository:**
-
    ```bash
    git clone <repository-url>
    cd <repository-folder>
