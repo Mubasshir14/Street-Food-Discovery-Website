@@ -125,9 +125,62 @@ const deleteCategory = async (id: string) => {
   });
 };
 
+const getAdminDashboardStats = async () => {
+  const [
+    totalPosts,
+    pendingPosts,
+    approvedPosts,
+    rejectedPosts,
+    users,
+    subscriptions,
+    activeSubscriptions,
+    payments,
+  ] = await Promise.all([
+    prisma.post.count(),
+    prisma.post.count({ where: { status: "PENDING" } }),
+    prisma.post.count({ where: { status: "APPROVED" } }),
+    prisma.post.count({ where: { status: "REJECTED" } }),
+    prisma.user.count(),
+    prisma.subscription.count(),
+    prisma.subscription.count({ where: { subcriptionStatus: "ACTIVE" } }),
+    prisma.payment.count({ where: { status: "PAID" } }),
+  ]);
+
+  return {
+    totalPosts,
+    pendingPosts,
+    approvedPosts,
+    rejectedPosts,
+    users,
+    subscriptions,
+    activeSubscriptions,
+    payments,
+  };
+};
+
+const getPaymentByMonth = async () => {
+  const paymentsByMonth = await prisma.$queryRaw<
+    { month: string; count: number }[]
+  >`
+      SELECT 
+        TO_CHAR("createdAt", 'Mon') AS month, 
+        COUNT(*) AS count
+      FROM "Payment"
+      GROUP BY month
+      ORDER BY MIN("createdAt")
+    `;
+
+  return paymentsByMonth.map((p) => ({
+    name: p.month,
+    payments: Number(p.count),
+  }));
+};
+
 export const CategoryService = {
   createCategory,
   getAllFromDB,
   getAllFromDBByID,
   deleteCategory,
+  getAdminDashboardStats,
+  getPaymentByMonth,
 };

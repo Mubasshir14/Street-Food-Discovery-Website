@@ -55,9 +55,33 @@ const deleteCategory = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getAdminDashboardStats = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await CategoryService.getAdminDashboardStats();
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Dashboard overview!",
+      data: result,
+    });
+  }
+);
+
+const getPaymentByMonth = catchAsync(async (req: Request, res: Response) => {
+  const result = await CategoryService.getPaymentByMonth();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Dashboard overview!",
+    data: result,
+  });
+});
+
 export const CategoryController = {
   createCategory,
   getAllFromDB,
   getAllFromDBByID,
   deleteCategory,
+  getAdminDashboardStats,
+  getPaymentByMonth,
 };
