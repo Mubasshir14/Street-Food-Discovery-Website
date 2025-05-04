@@ -1,5 +1,5 @@
-import AppError from "../../error/AppError";
 import prisma from "../../../shared/prisma";
+import AppError from "../../error/AppError";
 import { IAuthUser } from "../../interfaces/common";
 
 const createVote = async (user: IAuthUser, payload: any) => {

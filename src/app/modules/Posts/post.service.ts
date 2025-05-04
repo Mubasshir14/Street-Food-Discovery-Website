@@ -1,13 +1,13 @@
 import { Request } from "express";
 import { IFile } from "../../interfaces/file";
 import { FileUploader } from "../../../helpers/fileUploader";
-import prisma from "../../../shared/prisma";
 import AppError from "../../error/AppError";
 import { IAuthUser } from "../../interfaces/common";
 import { IPaginationOptions } from "../../interfaces/pagination";
 import { PaginationHelper } from "../../../helpers/paginationHelper";
 import { postSearchAbleFields } from "./posts.constant";
-import { PostStatus, Prisma } from "@prisma/client";
+import prisma from "../../../shared/prisma";
+import { PostStatus, Prisma } from "../../../../generated/prisma";
 
 const createPost = async (user: IAuthUser, req: Request) => {
   const file = req.file as IFile;

@@ -1,12 +1,12 @@
 import { Request } from "express";
 import { IFile } from "../../interfaces/file";
 import { FileUploader } from "../../../helpers/fileUploader";
-import prisma from "../../../shared/prisma";
 import AppError from "../../error/AppError";
 import { IPaginationOptions } from "../../interfaces/pagination";
 import { PaginationHelper } from "../../../helpers/paginationHelper";
-import { Prisma } from "@prisma/client";
 import { categorySearchAbleFields } from "./category.constant";
+import prisma from "../../../shared/prisma";
+import { Prisma } from "../../../../generated/prisma";
 
 const createCategory = async (req: Request) => {
   const file = req.file as IFile;

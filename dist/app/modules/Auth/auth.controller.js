@@ -17,24 +17,6 @@ const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const auth_service_1 = require("./auth.service");
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const http_status_1 = __importDefault(require("http-status"));
-// const loginUser: RequestHandler = catchAsync(
-//   async (req: Request, res: Response) => {
-//     const result = await AuthServices.loginUser(req.body);
-//     const { refresshToken } = result;
-//     res.cookie("refreshToken", refresshToken, {
-//       secure: false,
-//       httpOnly: true,
-//     });
-//     sendResponse(res, {
-//       statusCode: httpStatus.OK,
-//       success: true,
-//       message: "Logged in Successfully!",
-//       data: {
-//         accessToken: result.accessToken,
-//       },
-//     });
-//   }
-// );
 const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield auth_service_1.AuthServices.loginUser(req.body);
     const { accessToken, refresshToken } = result;

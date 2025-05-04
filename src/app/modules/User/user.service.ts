@@ -1,14 +1,13 @@
 import { Request } from "express";
-import { UserRole } from "../../../../generated/prisma";
+import { Prisma, UserRole, UserStatus } from "../../../../generated/prisma";
 import { FileUploader } from "../../../helpers/fileUploader";
-import prisma from "../../../shared/prisma";
 import { IFile } from "../../interfaces/file";
 import * as bcrypt from "bcrypt";
 import { IPaginationOptions } from "../../interfaces/pagination";
 import { PaginationHelper } from "../../../helpers/paginationHelper";
-import { Prisma, UserStatus } from "@prisma/client";
 import { userSearchAbleFields } from "./user.constant";
 import { IAuthUser } from "../../interfaces/common";
+import prisma from "../../../shared/prisma";
 
 const createAdmin = async (req: Request) => {
   const file = req.file as IFile;

@@ -59,11 +59,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const prisma_1 = require("../../../../generated/prisma");
 const fileUploader_1 = require("../../../helpers/fileUploader");
-const prisma_2 = __importDefault(require("../../../shared/prisma"));
 const bcrypt = __importStar(require("bcrypt"));
 const paginationHelper_1 = require("../../../helpers/paginationHelper");
-const client_1 = require("@prisma/client");
 const user_constant_1 = require("./user.constant");
+const prisma_2 = __importDefault(require("../../../shared/prisma"));
 const createAdmin = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const file = req.file;
     if (file) {
@@ -176,7 +175,7 @@ const getMyProfile = (user) => __awaiter(void 0, void 0, void 0, function* () {
     const userInfo = yield prisma_2.default.user.findUniqueOrThrow({
         where: {
             email: user === null || user === void 0 ? void 0 : user.email,
-            status: client_1.UserStatus.ACTIVE,
+            status: prisma_1.UserStatus.ACTIVE,
         },
         select: {
             id: true,
@@ -202,7 +201,7 @@ const updateMyProfile = (user, req) => __awaiter(void 0, void 0, void 0, functio
     const userInfo = yield prisma_2.default.user.findUniqueOrThrow({
         where: {
             email: user === null || user === void 0 ? void 0 : user.email,
-            status: client_1.UserStatus.ACTIVE,
+            status: prisma_1.UserStatus.ACTIVE,
         },
     });
     const file = req.file;

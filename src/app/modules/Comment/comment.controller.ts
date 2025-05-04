@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
-
 import { IAuthUser } from "../../interfaces/common";
 import catchAsync from "../../../shared/catchAsync";
 import sendResponse from "../../../shared/sendResponse";
@@ -36,7 +35,6 @@ const getComment = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getCommentByPostId = catchAsync(async (req: Request, res: Response) => {
-  console.log(req.params.id);
   const comment = await CommentService.getCommentByPostId(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.CREATED,

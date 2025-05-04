@@ -25,10 +25,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryService = void 0;
 const fileUploader_1 = require("../../../helpers/fileUploader");
-const prisma_1 = __importDefault(require("../../../shared/prisma"));
 const AppError_1 = __importDefault(require("../../error/AppError"));
 const paginationHelper_1 = require("../../../helpers/paginationHelper");
 const category_constant_1 = require("./category.constant");
+const prisma_1 = __importDefault(require("../../../shared/prisma"));
 const createCategory = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const file = req.file;
     let image;

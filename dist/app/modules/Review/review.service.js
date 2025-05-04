@@ -13,8 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReviewService = void 0;
-const AppError_1 = __importDefault(require("../../error/AppError"));
 const prisma_1 = __importDefault(require("../../../shared/prisma"));
+const AppError_1 = __importDefault(require("../../error/AppError"));
 const createReview = (user, payload) => __awaiter(void 0, void 0, void 0, function* () {
     const { postId, rating } = payload;
     const userData = yield prisma_1.default.user.findUnique({

@@ -6,7 +6,7 @@ import { PostService } from "./post.service";
 import { IAuthUser } from "../../interfaces/common";
 import pick from "../../../shared/pick";
 import { postFilterableFields } from "./posts.constant";
-import { PostStatus } from "@prisma/client";
+import { PostStatus } from "../../../../generated/prisma";
 
 const createPost: RequestHandler = catchAsync(
   async (req: Request & { user?: IAuthUser }, res: Response) => {

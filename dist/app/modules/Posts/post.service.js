@@ -25,11 +25,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostService = void 0;
 const fileUploader_1 = require("../../../helpers/fileUploader");
-const prisma_1 = __importDefault(require("../../../shared/prisma"));
 const AppError_1 = __importDefault(require("../../error/AppError"));
 const paginationHelper_1 = require("../../../helpers/paginationHelper");
 const posts_constant_1 = require("./posts.constant");
-const client_1 = require("@prisma/client");
+const prisma_1 = __importDefault(require("../../../shared/prisma"));
+const prisma_2 = require("../../../../generated/prisma");
 const createPost = (user, req) => __awaiter(void 0, void 0, void 0, function* () {
     const file = req.file;
     if (file) {
@@ -132,7 +132,7 @@ const getPendingPostFromDB = (params, options) => __awaiter(void 0, void 0, void
     const { searchTerm, status } = params, filterData = __rest(params, ["searchTerm", "status"]);
     const andCondions = [];
     andCondions.push({
-        status: client_1.PostStatus.PENDING,
+        status: prisma_2.PostStatus.PENDING,
     });
     if (searchTerm) {
         andCondions.push({
@@ -199,7 +199,7 @@ const getApprovedPostFromDB = (params, options, user) => __awaiter(void 0, void 
     const { searchTerm } = params, filterData = __rest(params, ["searchTerm"]);
     const andCondions = [];
     andCondions.push({
-        status: client_1.PostStatus.APPROVED,
+        status: prisma_2.PostStatus.APPROVED,
     });
     const userData = yield prisma_1.default.user.findUnique({
         where: {
@@ -283,7 +283,7 @@ const getRejectedPostFromDB = (params, options, user) => __awaiter(void 0, void 
     const { searchTerm } = params, filterData = __rest(params, ["searchTerm"]);
     const andCondions = [];
     andCondions.push({
-        status: client_1.PostStatus.REJECTED,
+        status: prisma_2.PostStatus.REJECTED,
     });
     const userData = yield prisma_1.default.user.findUnique({
         where: {
@@ -367,7 +367,7 @@ const getPremiumPostFromDB = (params, options, user) => __awaiter(void 0, void 0
     const { searchTerm } = params, filterData = __rest(params, ["searchTerm"]);
     const andCondions = [];
     andCondions.push({
-        status: client_1.PostStatus.APPROVED,
+        status: prisma_2.PostStatus.APPROVED,
     });
     const userData = yield prisma_1.default.user.findUnique({
         where: {
@@ -451,7 +451,7 @@ const getApprovedPostById = (id) => __awaiter(void 0, void 0, void 0, function* 
     const result = yield prisma_1.default.post.findUnique({
         where: {
             id,
-            status: client_1.PostStatus.APPROVED,
+            status: prisma_2.PostStatus.APPROVED,
         },
         include: {
             comments: true,

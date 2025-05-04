@@ -7,7 +7,7 @@ exports.PaymentRoutes = void 0;
 const express_1 = __importDefault(require("express"));
 const payment_controller_1 = require("./payment.controller");
 const auth_1 = __importDefault(require("../../middlewares/auth"));
-const client_1 = require("@prisma/client");
+const prisma_1 = require("../../../../generated/prisma");
 const router = express_1.default.Router();
 router.post("/ipn", payment_controller_1.PaymentController.validatePayment);
 // **/
@@ -16,5 +16,5 @@ router.post("/ipn", payment_controller_1.PaymentController.validatePayment);
 //     "expiresIn": 30
 //   }
 // **/
-router.post("/init-payment", (0, auth_1.default)(client_1.UserRole.USER), payment_controller_1.PaymentController.initPayment);
+router.post("/init-payment", (0, auth_1.default)(prisma_1.UserRole.USER), payment_controller_1.PaymentController.initPayment);
 exports.PaymentRoutes = router;
