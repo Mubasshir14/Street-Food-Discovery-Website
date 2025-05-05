@@ -112,17 +112,34 @@ const getAllFromDBByID = (id) => __awaiter(void 0, void 0, void 0, function* () 
     }
     return result;
 });
+// const deleteCategory = async (id: string) => {
+//   await prisma.category.findFirstOrThrow({
+//     where: {
+//       id,
+//     },
+//   });
+//   const result = await prisma.category.delete({
+//     where: {
+//       id,
+//     },
+//   });
+// };
 const deleteCategory = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    yield prisma_1.default.category.findFirstOrThrow({
-        where: {
-            id,
-        },
-    });
-    const result = yield prisma_1.default.category.delete({
-        where: {
-            id,
-        },
-    });
+    yield prisma_1.default.$transaction((tx) => __awaiter(void 0, void 0, void 0, function* () {
+        yield tx.category.findFirstOrThrow({
+            where: { id },
+        });
+        const posts = yield tx.post.findMany({
+            where: { categoryId: id },
+            select: { id: true },
+        });
+        const postIds = posts.map((p) => p.id);
+        yield tx.comment.deleteMany({ where: { postId: { in: postIds } } });
+        yield tx.vote.deleteMany({ where: { postId: { in: postIds } } });
+        yield tx.review.deleteMany({ where: { postId: { in: postIds } } });
+        yield tx.post.deleteMany({ where: { id: { in: postIds } } });
+        yield tx.category.delete({ where: { id } });
+    }));
 });
 const getAdminDashboardStats = () => __awaiter(void 0, void 0, void 0, function* () {
     const [totalPosts, pendingPosts, approvedPosts, rejectedPosts, users, subscriptions, activeSubscriptions, payments,] = yield Promise.all([

@@ -111,19 +111,42 @@ const getAllFromDBByID = async (id: string) => {
   return result;
 };
 
-const deleteCategory = async (id: string) => {
-  await prisma.category.findFirstOrThrow({
-    where: {
-      id,
-    },
-  });
+// const deleteCategory = async (id: string) => {
+//   await prisma.category.findFirstOrThrow({
+//     where: {
+//       id,
+//     },
+//   });
 
-  const result = await prisma.category.delete({
-    where: {
-      id,
-    },
+//   const result = await prisma.category.delete({
+//     where: {
+//       id,
+//     },
+//   });
+// };
+
+const deleteCategory = async (id: string) => {
+  await prisma.$transaction(async (tx) => {
+    await tx.category.findFirstOrThrow({
+      where: { id },
+    });
+
+    const posts = await tx.post.findMany({
+      where: { categoryId: id },
+      select: { id: true },
+    });
+    const postIds = posts.map((p) => p.id);
+
+    await tx.comment.deleteMany({ where: { postId: { in: postIds } } });
+    await tx.vote.deleteMany({ where: { postId: { in: postIds } } });
+    await tx.review.deleteMany({ where: { postId: { in: postIds } } });
+
+    await tx.post.deleteMany({ where: { id: { in: postIds } } });
+
+    await tx.category.delete({ where: { id } });
   });
 };
+
 
 const getAdminDashboardStats = async () => {
   const [
