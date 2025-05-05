@@ -12,7 +12,7 @@ A web application for discovering, posting, reviewing, and interacting with **st
 
 Each with different access and permissions.
 
-![Street Food Discovery](https://i.ibb.co.com/1JjzKymK/italian-food-stationery-template-23-2148559232.jpg)
+![Street Food Discovery](https://i.ibb.co.com/gLMztPDV/Website-Mockup.png)
 
 ---
 
