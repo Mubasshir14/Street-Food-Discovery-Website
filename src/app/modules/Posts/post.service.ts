@@ -113,6 +113,7 @@ const getAllFromDB = async (params: any, options: IPaginationOptions) => {
         comments: true,
         votes: true,
         reviews: true,
+        isPremium: true,
       },
     }),
     prisma.post.count({
@@ -193,6 +194,7 @@ const getPendingPostFromDB = async (
         comments: true,
         votes: true,
         reviews: true,
+        isPremium: true,
       },
     }),
     prisma.post.count({
@@ -291,7 +293,7 @@ const getApprovedPostFromDB = async (
         comments: true,
         votes: true,
         reviews: true,
-        isPremium: true
+        isPremium: true,
       },
     }),
     prisma.post.count({
@@ -390,6 +392,7 @@ const getRejectedPostFromDB = async (
         comments: true,
         votes: true,
         reviews: true,
+        isPremium: true,
       },
     }),
     prisma.post.count({
@@ -419,6 +422,7 @@ const getPremiumPostFromDB = async (
 
   andCondions.push({
     status: PostStatus.APPROVED,
+    isPremium: true,
   });
 
   const userData = await prisma.user.findUnique({
