@@ -291,6 +291,7 @@ const getApprovedPostFromDB = async (
         comments: true,
         votes: true,
         reviews: true,
+        isPremium: true
       },
     }),
     prisma.post.count({
