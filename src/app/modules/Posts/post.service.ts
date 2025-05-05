@@ -215,7 +215,7 @@ const getPendingPostFromDB = async (
 const getApprovedPostFromDB = async (
   params: any,
   options: IPaginationOptions,
-  user?: IAuthUser
+  // user?: IAuthUser
 ) => {
   const { page, limit, skip } = PaginationHelper.calculatePagination(options);
   const { searchTerm, ...filterData } = params;
@@ -224,24 +224,25 @@ const getApprovedPostFromDB = async (
 
   andCondions.push({
     status: PostStatus.APPROVED,
+    isPremium: false
   });
 
-  const userData = await prisma.user.findUnique({
-    where: {
-      email: user?.email,
-    },
-  });
+  // const userData = await prisma.user.findUnique({
+  //   where: {
+  //     email: user?.email,
+  //   },
+  // });
 
-  if (userData && userData.isPremium) {
-  } else if (userData && userData.isPremium) {
-    andCondions.push({
-      isPremium: false,
-    });
-  } else {
-    andCondions.push({
-      isPremium: false,
-    });
-  }
+  // if (userData && userData.isPremium) {
+  // } else if (userData && userData.isPremium) {
+  //   andCondions.push({
+  //     isPremium: false,
+  //   });
+  // } else {
+  //   andCondions.push({
+  //     isPremium: false,
+  //   });
+  // }
 
   if (searchTerm) {
     andCondions.push({

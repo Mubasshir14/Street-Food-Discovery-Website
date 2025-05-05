@@ -57,7 +57,7 @@ const getApprovedPostFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(
     const filters = (0, pick_1.default)(req.query, posts_constant_1.postFilterableFields);
     const options = (0, pick_1.default)(req.query, ["limit", "page", "sortBy", "sortOrder"]);
     const user = req.user;
-    const result = yield post_service_1.PostService.getApprovedPostFromDB(filters, options, user);
+    const result = yield post_service_1.PostService.getApprovedPostFromDB(filters, options);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,

@@ -196,30 +196,29 @@ const getPendingPostFromDB = (params, options) => __awaiter(void 0, void 0, void
         data,
     };
 });
-const getApprovedPostFromDB = (params, options, user) => __awaiter(void 0, void 0, void 0, function* () {
+const getApprovedPostFromDB = (params, options) => __awaiter(void 0, void 0, void 0, function* () {
     const { page, limit, skip } = paginationHelper_1.PaginationHelper.calculatePagination(options);
     const { searchTerm } = params, filterData = __rest(params, ["searchTerm"]);
     const andCondions = [];
     andCondions.push({
         status: prisma_2.PostStatus.APPROVED,
+        isPremium: false
     });
-    const userData = yield prisma_1.default.user.findUnique({
-        where: {
-            email: user === null || user === void 0 ? void 0 : user.email,
-        },
-    });
-    if (userData && userData.isPremium) {
-    }
-    else if (userData && userData.isPremium) {
-        andCondions.push({
-            isPremium: false,
-        });
-    }
-    else {
-        andCondions.push({
-            isPremium: false,
-        });
-    }
+    // const userData = await prisma.user.findUnique({
+    //   where: {
+    //     email: user?.email,
+    //   },
+    // });
+    // if (userData && userData.isPremium) {
+    // } else if (userData && userData.isPremium) {
+    //   andCondions.push({
+    //     isPremium: false,
+    //   });
+    // } else {
+    //   andCondions.push({
+    //     isPremium: false,
+    //   });
+    // }
     if (searchTerm) {
         andCondions.push({
             OR: posts_constant_1.postSearchAbleFields.map((field) => ({

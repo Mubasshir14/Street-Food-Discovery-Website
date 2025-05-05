@@ -59,7 +59,7 @@ const getApprovedPostFromDB = catchAsync(
     const result = await PostService.getApprovedPostFromDB(
       filters,
       options,
-      user as IAuthUser
+      // user as IAuthUser
     );
 
     sendResponse(res, {
