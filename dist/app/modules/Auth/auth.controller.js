@@ -27,7 +27,7 @@ const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
     res.cookie("accessToken", accessToken, {
         secure: true,
         httpOnly: true,
-        expires: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
+        expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
     });
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,

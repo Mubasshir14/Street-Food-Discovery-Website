@@ -147,7 +147,6 @@ const deleteCategory = async (id: string) => {
   });
 };
 
-
 const getAdminDashboardStats = async () => {
   const [
     totalPosts,
