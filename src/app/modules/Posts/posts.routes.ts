@@ -23,7 +23,7 @@ router.get(
 );
 router.get(
   "/get-premium-post",
-  auth(UserRole.ADMIN),
+  auth(UserRole.ADMIN, UserRole.USER),
   PostController.getPremiumPostFromDB
 );
 router.get("/", auth(UserRole.ADMIN), PostController.getAllFromDB);
