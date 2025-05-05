@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get(
   "/get-approved-post",
-  auth(UserRole.ADMIN, UserRole.USER),
+  // auth(UserRole.ADMIN, UserRole.USER),
   PostController.getApprovedPostFromDB
 );
 router.get(

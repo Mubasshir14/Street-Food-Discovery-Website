@@ -10,7 +10,9 @@ const auth_1 = __importDefault(require("../../middlewares/auth"));
 const posts_controller_1 = require("./posts.controller");
 const prisma_1 = require("../../../../generated/prisma");
 const router = express_1.default.Router();
-router.get("/get-approved-post", (0, auth_1.default)(prisma_1.UserRole.ADMIN, prisma_1.UserRole.USER), posts_controller_1.PostController.getApprovedPostFromDB);
+router.get("/get-approved-post", 
+// auth(UserRole.ADMIN, UserRole.USER),
+posts_controller_1.PostController.getApprovedPostFromDB);
 router.get("/get-pending-post", (0, auth_1.default)(prisma_1.UserRole.ADMIN), posts_controller_1.PostController.getPendingPostFromDB);
 router.get("/get-rejected-post", (0, auth_1.default)(prisma_1.UserRole.ADMIN), posts_controller_1.PostController.getRejectedPostFromDB);
 router.get("/get-premium-post", (0, auth_1.default)(prisma_1.UserRole.ADMIN, prisma_1.UserRole.USER), posts_controller_1.PostController.getPremiumPostFromDB);

@@ -112,7 +112,7 @@ const getAllFromDB = (params, options) => __awaiter(void 0, void 0, void 0, func
                 comments: true,
                 votes: true,
                 reviews: true,
-                isPremium: true
+                isPremium: true,
             },
         }),
         prisma_1.default.post.count({
@@ -180,7 +180,7 @@ const getPendingPostFromDB = (params, options) => __awaiter(void 0, void 0, void
                 comments: true,
                 votes: true,
                 reviews: true,
-                isPremium: true
+                isPremium: true,
             },
         }),
         prisma_1.default.post.count({
@@ -265,7 +265,7 @@ const getApprovedPostFromDB = (params, options, user) => __awaiter(void 0, void 
                 comments: true,
                 votes: true,
                 reviews: true,
-                isPremium: true
+                isPremium: true,
             },
         }),
         prisma_1.default.post.count({
@@ -350,7 +350,7 @@ const getRejectedPostFromDB = (params, options, user) => __awaiter(void 0, void 
                 comments: true,
                 votes: true,
                 reviews: true,
-                isPremium: true
+                isPremium: true,
             },
         }),
         prisma_1.default.post.count({
@@ -372,6 +372,7 @@ const getPremiumPostFromDB = (params, options, user) => __awaiter(void 0, void 0
     const andCondions = [];
     andCondions.push({
         status: prisma_2.PostStatus.APPROVED,
+        isPremium: true,
     });
     const userData = yield prisma_1.default.user.findUnique({
         where: {
