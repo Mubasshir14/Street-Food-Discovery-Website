@@ -148,6 +148,7 @@ const deleteCategory = async (id: string) => {
 };
 
 const getAdminDashboardStats = async () => {
+  
   const [
     totalPosts,
     pendingPosts,
@@ -167,6 +168,7 @@ const getAdminDashboardStats = async () => {
     prisma.subscription.count({ where: { subcriptionStatus: "ACTIVE" } }),
     prisma.payment.count({ where: { status: "PAID" } }),
   ]);
+
 
   return {
     totalPosts,
